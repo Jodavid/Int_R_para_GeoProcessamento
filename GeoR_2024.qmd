@@ -1,0 +1,2852 @@
+---
+title: "Introdução ao R aplicado ao Geoprocessamento"
+#subtitle: "Conceitos, Visão geral sobre IA e utilizações na área da Saúde"
+author: "Jodavid Ferreira"
+institute: "UFPE"
+title-slide-attributes:
+  data-background-image: images/ml_background.png
+  data-background-size: contain
+  data-background-opacity: "0.2"
+format:
+  revealjs:
+    slide-number: c/t
+    #css: ["theme/theme.css"]
+    css: ["css/jodavid.css"]
+    theme: default #dark
+    footer: "Introdução ao R aplicado ao Geoprocessamento - [Jodavid Ferreira](https://jodavid.github.io/)"
+    logo: "images/logo.png"
+    smaller: True
+    incremental: false
+    transition: concave
+    background-transition: convex
+    chalkboard: true
+editor_options: 
+  chunk_output_type: inline
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Estrutua do Minicurso
+
+<hr/>
+
+
+- Introdução ao GeoProcessamento;
+
+<br/>
+
+- Conceitos de Sistemas de Informação Geográfica;
+
+<br/>
+
+- Por que escolher o R;
+
+<br/>
+
+- Introdução a linguagem de programação R;
+
+<br/>
+
+- Criando mapas com R;
+
+<br/>
+
+
+
+
+---
+
+## Geoprocessamento
+
+<hr/>
+
+<br/>
+
+<div class="contrib">
+**Geoprocessamento** é a área da ciência que utiliza
+um conjunto de métodos e tecnologias para coletar, armazenar,
+processar, analisar dados espaciais sobre o mundo real (Burrough, 1986).
+</div>
+
+<br/>
+
+. . .
+
+Através dos SIGs (Sistemas de Informação Geográfica), que são tecnologias
+do Geoprocessamento, é possível:
+
+- representar em **ambientes computacionais** os
+fenômenos geográficos, tais como, a distribuição espacial de dados e informações,
+realização e visualização de análises espaciais, entre outros.
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+Os **Sistemas de Informação Geográfica** englobam tecnologias como:
+
+
+- Sensoriamento Remoto;
+- Digitalização de Dados;
+- Sistemas de Posicionamento Global - GPS;
+
+![](images/passive-remote-sensing.webp){.absolute width="500" style="margin: 0 0 0 20%;"}
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+> A primeira utilização de um **SIG**, foi em Londres - Inglaterra,
+no ano de **1854**, quando uma **epidemia de cólera** assolava a cidade e ninguém sabia o
+motivo para tal. Então o doutor **John Snow**, decidiu pegar um mapa do local, e localizar os poços de
+águas (principal fonte de água dos habitantes) e os locais de moradias do doentes, e ele
+visualizou uma forte correlação espacial entre as pessoas que doentes e os poços de água.
+
+
+![](images/dr_jhon_snow.png){.absolute width=200px style="margin: -50px 0 0 800px;"}
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+
+![](images/jhon_snow_mapa.png)
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+<br/>
+
+Alguns conceitos importantes sobre o SIG são:
+
+<br/>
+
+. . .
+
+- Espaço Geográfico;
+
+. . .
+
+- Dados Espaciais (Informação Espacial);
+
+. . .
+
+- Banco de dados Geográficos;
+ 
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+<h3>Espaço Geográfico</h3>
+
+<div class="contrib">
+Coleção de localizações na superfície da Terra onde ocorrem os fenômenos geográficos. O
+espaço geográfico se define em relação a suas coordenadas, sua altitude e sua posição
+relativa. Vale relembrar que os dados geográficos não estão sozinhos no espaço, ou
+seja, possuem relação com outros dados.
+</div>
+
+<br/>
+
+. . .
+
+O espaço geográfico é composto por entidades distintas (diferentes) e identificáveis os
+**geo-campos** e os **geo-objetos**;
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+<h3>Espaço Geográfico</h3>
+
+
+. . .
+
+
+> Os geo-campos possuem uma distribuição espacial de uma variável com valores em todos os pontos
+pertencentes a uma região do Espaço Geográfico.
+
+- <u>exemplos:</u> tipo de solo, floresta aberta.
+
+. . .
+
+
+> Os geo-objetos são dados que possuem localizações e identificação que compõem uma
+determinada região, do espaço geográfico.
+
+- <u>exemplos:</u>: uma pequena cidade, que possui hospitais, igreja, escolas, *IFPB*, etc.
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+<h3>Dados Espaciais (Informação Espacial)</h3>
+
+<div class="contrib">
+São as informações obtidas de um espaço geográfico que depende da localização do geo-
+objeto (ou de pontos do geo-campo).
+</div>
+
+<br/>
+
+. . .
+
+Os dados espaciais são compostos em duas partes (dois componentes distintos):
+
+
+- **Parte Gráfica**: responsável pela parte que representa o geo-objeto ou o geo-campo
+na visualização da região.
+
+- **Parte não gráfica**: responsável pela características, ou seja, os dados quantitativos e
+os qualitativos dos geo-campos ou geo-objetos que podem ser utilizados para fazer análises.
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<h3>Banco de dados Geográficos</h3>
+
+<br/>
+
+No SIG os dados espaciais são armazenados em Banco de Dados, e esta organização varia
+de acordo com o tipo do *software* utilizado.
+
+<div class="contrib">
+Geralmente os Bancos de dados do SIG são divididos em Projetos, cujo estes estão divididos
+em níveis, camadas ou Planos de Informação - PIs.
+</div>
+
+<pre></pre>
+
+. . .
+
+> Os Planos de Informações (PIs) armazenam os dados geográficos de uma determinada
+região. Cada plano representa a mesma área, porém contendo informações geográficas
+diferentes. Por exemplo PIs de rodovias, classificação climática, etc. O cruzamento das informações
+existentes nesses PIs, formarão a cartografia básica, ou seja, mapa da integração desses dados
+como produto final.
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+
+![](images/geoden_geoproc_1.png){.absolute width=450px}
+
+
+
+:::
+
+::: {.column width="50%"}
+
+![](images/geoden_geoproc_2.png){.absolute width=500px}
+
+
+:::
+
+::::
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+
+Esses dados dos Planos de Informações,
+são incorporados em um SIG, advindos de
+diversas fontes, dentre as quais, pode-se destacar:
+
+<br/>
+
+- os mapas em papel;
+- mapas digitais;
+- dados de campo;
+- sensoriamento remoto (fotos aéreas, imagens de satélite);
+- arquivos shapefiles (vetoriais);
+- raster (matricial);
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+<br/>
+
+
+Esses dados dos Planos de Informações,
+são incorporados em um SIG, advindos de
+diversas fontes, dentre as quais, pode-se destacar:
+
+<br/>
+
+- os mapas em papel;
+- mapas digitais;
+- dados de campo;
+- sensoriamento remoto (fotos aéreas, imagens de satélite);
+- **arquivos shapefiles (vetoriais);**
+- **raster (matricial);**
+
+
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+
+:::: {.columns}
+
+::: {.column width="70%"}
+
+
+<div style="text-align: center;">
+![](images/image1171.png){.relative width=320px}
+</div>
+
+
+:::
+
+
+::: {.column width="30%"}
+
+<br/>
+
+- **Formato Vetorial** - Conjunto de posições em x e y, que formam pontos, linhas e polígonos.
+
+<br/>
+
+- **Formato Matricial (Raster)** - Conjunto de linhas e colunas (matriz), a cada célula da matriz está associado um valor.
+
+:::
+
+::::
+
+
+
+
+---
+
+
+## Sistemas de Informação Geográfica
+
+<hr/>
+
+![](images/rastervsvector.png)
+
+---
+
+## Software para Geoprocessamento
+
+<hr/>
+
+
+![](images/rect849-3-6-7-5.png)
+<!-- {.absolute style="margin: -300px 0 0 500px;"} -->
+
+
+---
+
+## {background-image="images/download_R2.jpeg" background-opacity=1}
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+<div class="contrib">
+
+O R é uma linguagem de programação inicialmente desenvolvida para computação estatística.
+E licenciada como *Software Livre.*
+</div>
+
+. . .
+
+<br/>
+
+- Atualmente, é uma linguagem de programação muito utilizada em estatística e ciência de dados, e é uma das linguagens mais populares para análise de dados.
+
+. . .
+
+- É uma implementação de código aberto do S, que é uma linguagem de programação estatística desenvolvida pela AT&T Bell Laboratories.
+
+. . .
+
+- As vantagens do R para programação estatística são a facilidade de uso, a capacidade de criar gráficos de alta qualidade e a comunidade de usuários ativos.
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+> O R vai proporcionar a liberdade para fazer qualquer tipo de Análise Espacial.
+
+. . .
+
+<p style="text-align: center;font-size: 30pt;color: red;">Como assim? O que isso significa?</p>
+
+. . .
+
+<br/>
+
+Vamos supor que temos os seguintes problemas:
+
+. . .
+
+- A polícia deseja investigar se existe algum padrão espacial na distribuição de roubos.
+Roubos que ocorrem em determinadas áreas estão correlacionados com características sócio-
+econômicas dessas áreas?
+
+. . .
+
+- Quais os municípios do estado da Paraíba que possuem maiores taxas de casos de dengue dado sua população?
+Essas taxas são esatísticamente significativas?
+
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+Em geral, trabalhamos com quatro tipos de dados:
+
+- **Dados Pontuais:** é quando deseja analisar dados de uma determinada área específica,
+definida, e a localização exata é o fator de interesse de estudo. ex.: casos da dengue em uma
+cidade.
+
+. . .
+
+<div style="text-align: center;">
+![](images/TB_Brasil.png){.relative width=550px}
+</div>
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+Em geral, trabalhamos com quatro tipos de dados:
+
+- **Dados de Área:** são dados obtidos e analisados de áreas geográficas, nesse caso não utiliza o ponto exato, mas
+uma determinada área geográfica. Ex.: Incidência de alguma epidemia por município, bairro.
+
+
+. . .
+
+<div style="text-align: center;">
+![](images/RIE.png){.relative width=500px style="margin: -40px 0 0 0;"}
+</div>
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+Em geral, trabalhamos com quatro tipos de dados:
+
+- **Dados de Superfície:** são dados obtido de levantamento de recursos naturais, nos quais, a
+sua natureza é a própria superfície do fenômeno estudado. Ex.: a distribuição da
+temperatura em um estado.
+
+. . .
+
+<div style="text-align: center;">
+![fonte: Análise e Mapeamento dos Índices de Umidade, Hídrico e Aridez através do BHC para o Estado da Paraíba
+](images/Figura-3-Temperatura-media-mensal-do-Estado-da-Paraiba-o-C_W640.jpg){.relative width=600px style="margin: 0 0 0 0;"}
+</div>
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+Em geral, trabalhamos com quatro tipos de dados:
+
+- **Dados de Interação:** são dados obtidos quando há fluxo de informações entre dois ou mais
+pontos com localizações geográficas fixas. ex.: Fluxo migratório entre duas cidades.
+
+. . .
+
+<div style="text-align: center;">
+![](images/dados_interacao.png){.relative width=600px style="margin: 0 0 0 0;"}
+</div>
+
+
+
+---
+
+## Por que a escolha do R?
+
+<hr/>
+
+<br/>
+
+
+> Essa flexibilidade para desenvolver pesquisa e implementar novos métodos de análise espacial, é um dos pontos que torna o R uma ferramenta poderosa para o Geoprocessamento.
+
+<br/>
+
+
+<div style="text-align: center;">
+![](images/R_Geo.webp){.relative width=600px style="margin: 0 0 0 0;"}
+</div>
+
+
+---
+
+## Linguagem R
+
+<hr/>
+
+<br/>
+
+Como dito anteriormente, o *R* é uma linguagem de programação de código aberto e licenciada como *Software Livre.*
+
+. . .
+
+<br/>
+
+- Um software ser licenciado como *software livre*, significa que você pode utilizá-lo para qualquer propósito, estudar seu código fonte, adaptá-lo para suas necessidades, redistribuir cópias do programa, melhorar o programa e distribuir suas melhorias para a comunidade.
+
+. . .
+
+
+> Isso não é no nível de utilizar o R para fazer scripts, mas você pode ir a um nível mais profundo, ou seja, você pode pegar o R, fazer uma nova linguagem de programação baseada nele e distribuir para a comunidade, sem ter que pagar nada por isso, entretanto, vai precisar respeitar a licença do R, esta deve ser a mesma na sua modificação.
+
+
+---
+
+## Linguagem R
+
+<hr/>
+
+<br/>
+
+- Para obter o R, acesse o link: [https://cloud.r-project.org/](https://cloud.r-project.org/)
+
+- O CRAN (Comprehensive R Archive Network) é um conjunto de servidores-espelho distribuídos pelo mundo e é utilizado para distribuir o R e os pacotes do R.
+
+. . .
+
+- Uma *nova grande* versão do R é lançada uma  vez por ano, e há dois ou três pequenos lançamentos por ano.
+
+- É interessante manter o R sempre atualizado, pois as novas versões do R trazem melhorias de desempenho em relação aos hardware mais recentes, novas funcionalidades e correções de bugs.
+tware para o R.
+
+> No momento da criação desse minicuroso, o R encontrava-se na versão 4.4.2 lançada em 31.10.2024.
+
+
+
+---
+
+## Linguagem R
+
+<hr/>
+
+![IDE padrão do R no Windows, é instalada juntamente com a linguagem no sistema.](images/rgui-32-bits.webp)
+
+
+---
+
+## Linguagem R
+
+<hr/>
+
+![O uso R no Linux é através do terminal do sistema.](images/r2.jpg)
+
+
+---
+
+## Linguagem R
+
+<hr/>
+
+
+![](images/rstudio_layout.png){style="align: center; width: 80%; height: auto;"}
+<p>
+- RSTUDIO - [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+
+---
+
+## Pacotes
+
+<hr/>
+
+<br/>
+
+Um conceito importante no R são os pacotes.
+
+- Um pacote no R é uma colação de funções, dados e documentação que estende as capacidades do R base.
+
+  - O R base é o conjunto de funções que estão disponíveis quando você instala o R.
+
+. . .
+
+- Existem milhares de pacotes disponíveis no CRAN, que foram disponibilizados por desenvolvedores de todo o mundo.
+
+- Para instalar um pacote no R, é da seguinte forma:
+
+```{r, echo=TRUE, eval=FALSE}
+install.packages("nome_do_pacote")
+```
+
+- Se não aparecer nenhum erro no console, tudo indica que o pacote foi instalado corretamente.
+
+---
+
+
+## Pacotes
+
+<hr/>
+
+<br/>
+
+- Para carregar um pacote no R, utilizamos uma das seguintes funções:
+
+
+```{r, echo=T, eval=T}
+# Exemplo de importação de pacotes
+library(tidyverse)
+```
+
+ou
+
+
+```{r, echo=T, eval=T}
+# Exemplo de importação de pacotes
+require(tidyverse)
+```
+
+. . .
+
+e as funções do pacote podem ser usadas de duas formas:
+
+```{r, echo=T, eval=T}
+# Exemplo de utilização de função de pacote
+iris |>
+  filter(Species == "setosa") |>
+  head()
+```
+
+
+---
+
+
+## Pacotes
+
+<hr/>
+
+ou 
+
+```{r, echo=T, eval=T}
+# Exemplo de utilização de função de pacote
+datasets::iris |>
+  dplyr::filter(Species == "setosa") |>
+  utils::head()
+```
+
+
+. . .
+
+relembrando a estrutura anterior novamente...
+
+. . .
+
+```{r, echo=T, eval=T}
+# Exemplo de utilização de função de pacote
+iris |>
+  filter(Species == "setosa") |>
+  head()
+```
+
+
+---
+
+## Operações Básicas
+
+<hr/>
+
+<br/>
+
+- O R é uma linguagem de programação que suporta operações aritméticas básicas, como adição, subtração, multiplicação e divisão.
+
+. . .
+
+```{r, echo=T, eval=T}
+# Exemplo de operações aritméticas
+1 + 1
+8 - 1
+10 * 2
+35 / 5
+```
+
+----
+
+
+## Criação de Objetos
+
+<hr/>
+
+<br/>
+
+- No R, é possível criar objetos para armazenar valores, e esses objetos podem ser de diferentes tipos, como números, strings, vetores, matrizes, data frames, entre outros.
+
+. . .
+
+- Criamos novos objetos utilizando o oprador de atribuição `<-` ou `=`, estes podem ser utilizados da seguinte forma:
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de objetos
+x <- 42/2
+y = 47
+1+1 -> z
+print(x)
+print(y)
+print(z)
+```
+
+
+
+----
+
+## Utilização de Funções
+
+<hr/>
+
+<br/>
+
+- O R possui uma série de funções embutidas que podem ser utilizadas para realizar operações matemáticas, estatísticas, de manipulação de dados, entre outras.
+Estas funções são utilizadas da seguinte forma:
+
+. . .
+
+```{r, echo=T, eval=T}
+# Exemplo de utilização de funções
+sqrt(16)
+log(2.71828)
+```
+
+. . .
+
+- Além disso, é possível criar funções personalizadas no R:
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de funções
+quadrado <- function(x) {
+  return(x^2)
+}
+
+saida <- quadrado(5)
+print(saida)
+```
+
+---
+
+
+## vetores, arrays, listas e matrizes
+
+<hr/>
+
+- No R, é possível criar vetores, arrays e listas, que são estruturas de dados que podem armazenar múltiplos valores.
+
+. . .
+
+- Um vetor é uma sequência de valores de um único tipo, e é criado utilizando a função `c()`.
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de vetores
+x <- c(1, 2, 3, 4, 5)
+
+print(x)
+```
+
+. . .
+
+- Um array é uma estrutura de dados que pode armazenar múltiplos valores de diferentes tipos, e é criado utilizando a função `array()`.
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de arrays
+y <- array(c(1, "a", TRUE), dim = c(3, 1))
+
+print(y)
+```
+
+---
+
+
+## vetores, arrays, listas e matrizes
+
+<hr/>
+
+- Uma lista é uma estrutura de dados que pode armazenar múltiplos valores de diferentes tipos, e é criado utilizando a função `list()`.
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de listas
+z <- list(1, "a", TRUE)
+
+print(z)
+
+```
+
+. . .
+
+- Também temos o conceito de Matrizes, que são vetores com dimensões, ou seja, são vetores que possuem linhas e colunas, e são criadas utilizando a função `matrix()`.
+
+```{r, echo=T, eval=T}
+# Exemplo de criação de matrizes
+m <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+
+print(m)
+```
+
+
+
+---
+
+
+## vetores, arrays, listas e matrizes
+
+<hr/>
+
+- Para acessar os elementos de estruturas como um vetor, array, lista ou matriz, utilizamos colchetes `[]`.
+
+. . .
+
+> Vale uma observação, de que os índices em R começam em 1, e não em 0, como em algumas outras linguagens de programação.
+
+. . .
+
+```{r, echo=T, eval=T}
+# Exemplo de acesso a elementos de vetores
+x <- c(1, 2, 3, 4, 5)
+
+print(x[1])
+print(x[3])
+```
+
+. . .
+
+```{r, echo=T, eval=T}
+# Exemplo de acesso a elementos de matrizes
+m <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+
+print(m[1, 2])
+print(m[2, 3])
+```
+
+---
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<hr/>
+
+<h2 style="text-align:center">pacote *dplyr*</h2>
+
+<hr/>
+
+
+
+---
+
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- O pacote `dplyr` é um pacote do R que fornece uma gramática para manipulação de dados, e é muito útil para transformar, filtrar e resumir dados.
+
+. . .
+
+- O `dplyr` fornece um conjunto de funções que são fáceis de usar e que permitem realizar operações comuns de manipulação de dados de forma eficiente, dessa forma, para essa parte inicial de tratamento de dados, vamos focar na utilização desse pacote.
+
+. . .
+
+- Vamos tentar sempre utilizar as funções da seguinte forma `pacote::funcao()` para evitar conflitos de funções com o mesmo nome em diferentes pacotes.
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+
+- Vamos selecionar uma base de dados para utilizar as funções do `dplyr`:
+
+```{r, echo=T, eval=T}
+dados <- nycflights13::flights
+
+dados |> 
+  head(13)
+```
+
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+Conseguimos fazer filtragem de dados utilizando a função `filter()`
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::filter(month == 11, day == 1) |> 
+  head(13)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+Para usar filtragens de forma eficaz, você precisa saber como utilizar operadores de comparação e operadores lógicos.
+
+. . .
+
+Alguns operadores são:
+
+- Operadores de comparação:
+  - `==` igual a
+  - `!=` diferente de
+  - `>` maior que
+  - `<` menor que
+
+. . .
+
+![](images/operadores_logicos.jpg){.absolute style="margin: -300px 0 0 500px;"}
+
+- Operadores lógicos:
+  - `&` e 
+  - `|` ou
+  - `!` não
+  
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- Neste caso, podemos utilizar
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::filter(month == 11 & day == 1) |> 
+  head(5)
+```
+
+. . .
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::filter(!(month != 11 | day != 1)) |> 
+  head(5)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- Um problema que pode surgir para complicar as comparações, são os valores faltantes.
+- Os *NAs* ("not available", em português, "não disponível") são valores que não existem na base de dados.
+- Qualquer operação envolvendo um valor desconhecido, também será desconhecida.
+
+. . .
+
+```{r, echo=T, eval=T}
+NA > 5
+10 == NA
+NA + 10
+NA == NA
+```
+
+. . . 
+
+- Para verificar se um valor é faltante, pode utilizar a função `is.na()`.
+
+```{r, echo=T, eval=T}
+is.na(NA)
+is.na(10)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+
+- A função `filter()` só considera as linhas em que a condição é verdadeira (`TRUE`), e descarta as linhas em que a condição é falsa (`FALSE`) ou `NA`. Se deseja preservar os valores faltantes, peça eles explicitamente:
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::filter(is.na(dep_time)) |> 
+  head(10)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+
+- Outra função interessante é a `arraange()`, que serve para ordenar os dados.
+- Ele funciona semelhante ao `filter()`, mas ao invés de filtrar, ele ordena.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::arrange(desc(dep_time)) |> 
+  head(10)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- é possível ordenar por mais de uma coluna, basta passar mais argumentos para a função `arrange()`.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::arrange(year, month, day) |> 
+  head(10)
+```
+
+
+.  . .
+
+- Se deseja ordenar em forma decrescente, basta utilizar a função `desc()`.
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- A função `select()` é utilizada para selecionar colunas de um data frame.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::select(year, month, day) |> 
+  head(15)
+```
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- É possível excluir colunas também utilizando o `select()`.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::select(-year, -month, -day) |> 
+  head(15)
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- A função `mutate()` é utilizada para criar novas colunas a partir de colunas existentes.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::mutate(speed = distance / air_time) |> 
+  head(15)
+```
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- Existe também a função `summarise()`, que é utilizada para resumir os dados.
+- A função `summarise()` é muito útil para resumir os dados e obter estatísticas descritivas.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::summarise(mean_distance = mean(distance), 
+                   mean_air_time = mean(air_time)) 
+```
+
+. . .
+
+- Observe que para a variável `air_time` o resultado foi `NA`, isso ocorreu porque a função `mean()` não sabe o que fazer com valores faltantes. Nesse caso, devemos passar como argumento para remover os valores faltantes.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::summarise(mean_distance = mean(distance), 
+                   mean_air_time = mean(air_time, na.rm = TRUE)) 
+```
+
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+
+- A função `group_by()` é utilizada para agrupar os dados por uma ou mais variáveis.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::group_by(month) |> 
+  dplyr::summarise(mean_distance = mean(distance), 
+                   mean_air_time = mean(air_time, na.rm = TRUE)) 
+```
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+- Contagens também é uma operação muito comum, e para isso, utilizamos a função `n()`.
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::group_by(month) |> 
+  dplyr::summarise(n = n())
+```
+
+
+
+
+---
+
+
+## Manipulação de dados com dplyr
+
+<hr/>
+
+Também conseguimos agrupar por múltiplas variáveis, basta passar mais argumentos para a função `group_by()`
+
+```{r, echo=T, eval=T}
+dados |> 
+  dplyr::group_by(month, day) |> 
+  dplyr::summarise(n = n())
+```
+
+
+
+---
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<hr/>
+
+<h2 style="text-align:center">pacote *ggplot2*</h2>
+
+<hr/>
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+
+<div style="text-align:center; width=150px">
+![](https://github.com/tidyverse/ggplot2/raw/main/man/figures/logo.png){.relative}
+</div>
+
+
+<div class="contrib">
+
+O **ggplot2** (<https://ggplot2.tidyverse.org/>) é um sistema para a criação declarativa de gráficos, baseado na **Gramática de Gráficos**. Você fornece os dados, informa ao **ggplot2** como mapear as variáveis para os atributos estéticos, quais primitivas gráficas usar, e ele cuida dos detalhes^[Definição obtida no próprio repositório do ggplot2: https://github.com/tidyverse/ggplot2].
+
+
+</div>
+
+
+----
+
+
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+```{r, echo=T, eval=T, fig.align='center'}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point()
+```
+
+
+
+
+----
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>O que é gramática de dados?</h4>
+
+
+- Foi criado em 2005 por Wilkinson para descrever as características fundamentais que estão por trás de todos os gráficos.
+
+<pre></pre>
+
+. . .
+
+> Em resumo, a *gramática de gráficos* nos diz que um gráfico mapeia os dados para atributos estéticos (cor, forma, tamanho) de objetos geométricos (pontos, linhas, barras). Além disso, o gráfico também pode incluir transformações estatísticas nos dados e informações sobre o sistema de coordenadas.
+
+<!--
+Sendo assim, um gráfico é uma função qu engloba dados, álgebra, escalas, estatísticas, geometria, coordenadas e estética.
+
+----
+
+O GoG demonstra o conjunto mínimo de componentes necessários para gerar um gráfico estatístico, entendendo que um gráfico é uma função: dados, álgebra, escalas, estatísticas, geometria, coordenadas e estética.
+
+-->
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+- O **ggplot2** (Wickham 2009) baseia-se na gramática de Wilkinson, focando na primazia das camadas e adaptando-a para uso no R.
+
+<!--
+O **facetting** pode ser usado para criar gráficos de diferentes subconjuntos de dados. A combinação desses componentes independentes é o que constitui um gráfico.
+-->
+
+- Todos os gráficos são compostos pelos dados, a informação que você deseja visualizar, e um mapeamento, a descrição de como as variáveis dos dados são mapeadas para os atributos estéticos.
+
+
+- Existem cinco componentes de mapeamento:
+  - Camadas;
+  - Escalas;
+  - Coordenadas;
+  - Facetas;
+  - Temas.
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Componentes de mapeamento:</h4>
+
+Todo gráfico em *ggplot2* será iniciado com a função `ggplot` e, em seguida, adicionaremos dados, e demais informações. Uma dessas opções que podem ser adicionadas na função `ggplot` é o `aes()`.
+
+
+
+- `aes()`: são mapeamentos estéticos que descrevem como as variáveis dos dados são mapeadas para propriedades visuais (estéticas).
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="5"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point()
+```
+
+
+
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Camadas:</h4>
+
+- As **camadas** são coleções de elementos geométricos e transformações estatísticas. Os elementos geométricos, conhecidos como **geoms**, representam o que você realmente vê no gráfico: *pontos, linhas, polígonos, etc*. As transformações estatísticas, chamadas de **stats**, resumem os dados: por exemplo, *agrupando e contando observações para criar um histograma ou ajustando um modelo*.
+
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="6"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point()
+```
+
+. . .
+
+<br/>
+
+
+<h4 style="text-align: center; color: red;">O exemplo anterior não possui todas as camadas, vamos considerar um novo exemplo! </h4>
+
+
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+```{r, echo=T, eval=F, fig.align='center'}
+library(ggplot2)
+
+# Usando o dataset 'milhas' do pacote 'dados'
+milhas <- dados::milhas
+
+# Criando o gráfico com os 5 componentes
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  # Camada de pontos geométricos
+  geom_point() + 
+  # Escala de cor manual
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  # Sistema de coordenadas polar para um efeito diferenciado
+  coord_cartesian()+
+  # Facetando (subdividindo) o gráfico por tipo de tração (drv)
+  facet_wrap(~ tracao) + 
+  # Tema minimalista para controlar os detalhes visuais
+  theme_minimal(base_size = 15, base_family = "Arial") +
+  # Título do gráfico
+  labs(title = "Consumo na Rodovia vs Cilindrada",
+       x = "Cilindrada do motor (litros)", 
+       y = "Consumo na rodovia (mpg)", 
+       colour = "Classe do veículo")
+
+```
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+```{r, echo=F, eval=T, fig.align='center'}
+library(ggplot2)
+
+# Usando o dataset 'milhas' do pacote 'dados'
+milhas <- dados::milhas
+
+# Criando o gráfico com os 5 componentes
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  # Camada de pontos geométricos
+  geom_point() + 
+  # Escala de cor manual
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  # Sistema de coordenadas polar para um efeito diferenciado
+  coord_cartesian()+
+  # Facetando (subdividindo) o gráfico por tipo de tração (drv)
+  facet_wrap(~ tracao) + 
+  # Tema minimalista para controlar os detalhes visuais
+  theme_minimal(base_size = 15, base_family = "Arial") +
+  # Título do gráfico
+  labs(title = "Consumo na Rodovia vs Cilindrada",
+       x = "Cilindrada do motor (litros)", 
+       y = "Consumo na rodovia (mpg)", 
+       colour = "Classe do veículo")
+
+
+```
+
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Escalas:</h4>
+
+- As **Escalas** mapeiam valores no espaço dos dados para valores no espaço estético. Isso inclui o uso de cor, forma ou tamanho. As escalas também desenham a legenda e os eixos, que possibilitam a leitura dos valores originais dos dados a partir do gráfico (um mapeamento inverso).
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="7-10"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point() + 
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  coord_cartesian()+
+  facet_wrap(~ tracao) + 
+  theme_minimal(base_size = 15, base_family = "Arial")
+
+
+```
+
+----
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Coordenadas:</h4>
+
+- As **Coordenadas** ou sistema de coordenadas, descreve como as coordenadas dos dados são mapeadas no plano gráfico. Ele também fornece eixos e linhas de grade para ajudar a ler o gráfico. Normalmente usamos o sistema de coordenadas Cartesiano, mas vários outros estão disponíveis, incluindo coordenadas polares e projeções de mapas.
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="11"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point() + 
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  coord_cartesian()+
+  facet_wrap(~ tracao) + 
+  theme_minimal(base_size = 15, base_family = "Arial")
+
+```
+
+----
+
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Facetas:</h4>
+
+- As **facetas** especificam como dividir e exibir subconjuntos de dados como múltiplos gráficos pequenos. Isso também é conhecido como **condicionamento** ou **latticing/trellising**.
+
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="12"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point() + 
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  coord_cartesian()+
+  facet_wrap(~ tracao) + 
+  theme_minimal(base_size = 15, base_family = "Arial")
+
+```
+
+
+----
+
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+<h4>Temas:</h4>
+
+- Os **temas** controlam os detalhes mais finos de exibição, como o tamanho da fonte e a cor de fundo. Embora os padrões no **ggplot2** tenham sido escolhidos com cuidado, pode ser necessário consultar outras referências para criar um gráfico mais atraente e editar os existentes da melhor forma que preferir. 
+
+
+
+```{r, echo=T, eval=F, fig.align='center',`code-line-numbers`="13"}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+ggplot(milhas, aes(cilindrada, rodovia, colour = classe)) +
+  geom_point() + 
+  scale_colour_manual(values = c("2 assentos" = "red", "compacto" = "blue", 
+                                 "médio" = "green", "minivan" = "purple", 
+                                 "pickup" = "orange", "subcompacto" = "brown", 
+                                 "suv" = "pink")) +
+  coord_cartesian()+
+  facet_wrap(~ tracao) + 
+  theme_minimal(base_size = 15, base_family = "Arial")
+
+```
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<h3 style="text-align: center;">Construindo um gráfico no R</h3>
+
+. . .
+
+1. Abrir o `RStudio`;
+
+2. Abrir um novo arquivo `R`:
+
+    * `File > New File > R Script`
+    * ou $\quad$ `Ctrl + Shift + N`;
+
+. . .
+
+1. Vamos instalar o pacote `dados` para pegar base de dados:
+
+```{r, echo=TRUE, eval=FALSE}
+install.packages("dados")
+```
+
+2. Ler a base e visualizar as primeiras linhas:
+
+```{r, echo=TRUE, eval=F}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+milhas |> 
+  head(3)
+
+```
+
+---
+
+## ggplot2
+
+<hr/>
+
+```{r, echo=F, eval=TRUE}
+library(ggplot2)
+
+milhas <- dados::milhas
+
+milhas |> 
+  head(3)
+
+```
+. . .
+
+3. Vamos visualizar o tipo das variáveis
+
+```{r, echo=TRUE, eval=TRUE}
+str(milhas)
+```
+
+> Quem desejar entender o que significa cada variável da base pode executar `?dados::milhas` no console.
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+4. Vamos criar um gráfico de dispersão entre as colunas `cilindrada` e `rodovia`
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia)) + 
+  geom_point()
+
+```
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+Vamos separar as observações por `tipo do carro`
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia, colour = classe)) + 
+  geom_point()
+```
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+Uma segunda forma de fazer, é:
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia)) + 
+  geom_point(aes(colour = classe))
+
+```
+
+---
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+Utilizando facetamento por `tipo do carro`:
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia)) + 
+  geom_point() + 
+  facet_wrap(~classe)
+
+```
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+Estamos interessados em fazer Box-Plot, logo:
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia)) + 
+  geom_boxplot()
+
+```
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+<br/>
+
+
+Estamos interessados em fazer Box-Plot, por `tipo de carro`, assim:
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot(milhas, aes(x = cilindrada, y = rodovia)) + 
+  geom_boxplot() + 
+  facet_wrap(~classe)
+```
+
+<!-- --- -->
+
+
+<!-- ## ggplot2 -->
+
+<!-- <hr/> -->
+
+<!-- ```{r, echo=TRUE, eval=TRUE} -->
+<!-- # Verificando a quantidade de informações únicas -->
+<!-- milhas |>  -->
+<!--   sapply(function(x){ -->
+<!--     x |>  -->
+<!--       unique() |>  -->
+<!--       length() -->
+<!--   }) -->
+
+<!-- milhas |>  -->
+<!--   head(5) -->
+<!-- ``` -->
+
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+Vamos construir um gráfico de barras horizontais com percentual por categoria, tema minimalista e na tonalidade azul.
+
+. . .
+
+Mas primeiro, vamos entender como tratar os dados e construir o gráfico na forma padrão (vertical), e em seguida ir modificando.
+
+. . .
+
+```{r, warning=FALSE, message=FALSE, echo=TRUE, eval=TRUE}
+library(dplyr)
+
+# Criando um novo data.frame com proporções
+classes_milhas <- milhas |>
+    count(classe) |>
+    mutate(prop = round(prop.table(n),2))
+
+#' --------------------
+#' Ordenando as colunas pela frequência
+classes_milhas$classe <- factor(classes_milhas$classe,
+                                    levels = classes_milhas$classe[order(classes_milhas$n, decreasing = F)])
+
+```
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+
+```{r, echo=TRUE, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity')
+
+```
+
+
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+Agora vamos colocar as barras na horizontal e tonalidade azul:
+
+
+```{r, echo=TRUE, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip()
+```
+
+
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+Modificando o tema do gráfico:
+
+
+```{r, echo=TRUE, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip() +
+  theme_linedraw()
+```
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+removendo os nomes dos eixos `x`e `y`:
+
+
+```{r, echo=TRUE, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip() +
+  theme_linedraw() +
+  xlab("") +
+  ylab("")
+
+```
+
+
+---
+
+
+## ggplot2
+
+<hr/>
+
+
+```{r, echo=TRUE, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip() +
+  theme_linedraw() +
+  xlab("") +
+  ylab("") +
+  labs(title = "Tipos de Carros da base Milhas") +
+  scale_y_continuous(labels = scales::percent_format(), position = "right" )
+
+```
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+Nosso gráfico final, após algumas adições de camadas:
+
+
+```{r, echo=T, eval=F,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip() +
+  theme_linedraw() +
+  xlab("") +
+  ylab("") +
+  labs(title = "Tipos de Carros da base Milhas") +
+  scale_y_continuous(labels = scales::percent_format(), position = "right" ) +
+  theme(axis.text = element_text(size=10),
+                   plot.title = element_text(color="black", size=15, face="bold.italic"),
+                   #--
+                   axis.title.x = element_blank(),
+                   #--
+                   axis.ticks = element_blank(),
+                   panel.border = element_blank(),
+                   panel.grid.major = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.background = element_rect(fill = "transparent",colour = NA),
+                   plot.background = element_rect(fill = "transparent",colour = NA))
+
+```
+
+
+---
+
+## ggplot2
+
+<hr/>
+
+Nosso gráfico final, após algumas adições de camadas:
+
+
+```{r, echo=F, eval=TRUE,fig.width=7, fig.height=4, fig.align='center'}
+
+ggplot(classes_milhas, aes(classe, y = prop)) + 
+  geom_bar(stat = 'identity', fill = "#4789e2") +
+  coord_flip() +
+  theme_linedraw() +
+  xlab("") +
+  ylab("") +
+  labs(title = "Tipos de Carros da base Milhas") +
+  scale_y_continuous(labels = scales::percent_format(), position = "right" ) +
+  theme(axis.text = element_text(size=10),
+                   plot.title = element_text(color="black", size=15, face="bold.italic"),
+                   #--
+                   axis.title.x = element_blank(),
+                   #--
+                   axis.ticks = element_blank(),
+                   panel.border = element_blank(),
+                   panel.grid.major = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.background = element_rect(fill = "transparent",colour = NA),
+                   plot.background = element_rect(fill = "transparent",colour = NA))
+
+```
+
+
+
+---
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<hr/>
+
+<h2 style="text-align:center">vamos praticar!</h2>
+
+<hr/>
+
+
+---
+
+## Criação de mapas com R
+
+<hr/>
+
+<br/>
+
+Vamos criar mapas de 3 formas diferentes, todos utilizando o conceito de **dados de área**:
+
+<br/>
+<br/>
+
+1. Criando mapas com auxílio do pacote `geobr`;
+
+<br/>
+
+2. Criando mapas utilizando arquivos *shapefile* (.shp);
+
+<br/>
+
+3. Criando mapas iterativos com *shapefile* (.shp) e o pacote `leaflet`;
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+
+<br/>
+
+<div style="text-align:center; width=150px">
+![](https://github.com/ipeaGIT/geobr/raw/master/r-package/man/figures/geobr_logo_y.png?raw=true){.relative width=200px}
+</div>
+
+
+
+> `geobr` é um pacote computacional para download de conjuntos de dados espaciais oficiais do Brasil. O pacote inclui uma ampla gama de dados geoespaciais em formato de geopacote (como shapefiles), disponíveis em várias escalas geográficas e por vários anos com atributos harmonizados, projeção e topologia^[Texto retirado do site do [github](https://github.com/) do pacote: [https://github.com/ipeaGIT/geobr](https://github.com/ipeaGIT/geobr)].
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+
+
+
+> Para criarmos nosso mapa, vamos precisar gerar dados para serem as informações existentes no mapa. Dessa forma, vamos supor que estamos gerando quantas pessoas estão no youtube nesse momento em cada estado do Brasil. Vamos gerar esses dados através de simulação, sendo uma amostra de tamanho 1.000, que vai discrimar aleatoriamente cada observação para os 26 estados + DF do país.
+
+Lista dos estados do Brasil (BR):
+
+
+:::: {.columns style="font-size:20px;"}
+
+
+::: {.column width="25%"}
+
+- Acre - AC;
+- Alagoas - AL;
+- Amapá - AP;
+- Amazonas - AM;
+- Bahia - BA;
+- Ceará - CE;
+- Distrito Federal - DF;
+
+:::
+
+::: {.column width="25%"}
+
+- Espírito Santo - ES;
+- Goiás - GO;
+- Maranhão - MA;
+- Mato Grosso - MT;
+- Mato Grosso do Sul - MS;
+- Minas Gerais - MG;
+- Pará - PA;
+
+:::
+
+::: {.column width="25%"}
+
+- Paraíba - PB;
+- Paraná - PR;
+- Pernambuco - PE;
+- Piauí - PI;
+- Roraima - RR;
+- Rondônia - RO;
+- Rio de Janeiro - RJ;
+
+:::
+
+::: {.column width="25%"}
+
+- Rio Grande do Norte - RN;
+- Rio Grande do Sul - RS;
+- Santa Catarina - SC;
+- São Paulo - SP;
+- Sergipe - SE;
+- Tocantins - TO.
+
+:::
+
+::::
+
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+```{r eval=TRUE, echo=TRUE}
+
+# Adicionando uma semente
+set.seed(29)
+
+# Estados
+estados <- c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES",
+             "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR",
+             "PE", "PI", "RR", "RO", "RJ", "RN", "RS", "SC",
+             "SP", "SE", "TO")
+
+# Verificando se existem 27 estados
+estados |> 
+  length()
+
+# Criando uma amostra de tamanho 1.000
+amostra <- sample(x = estados, size = 1000, replace = TRUE)
+
+# Verificando as frequências em cada estado
+amostra |> 
+  table()
+
+```
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+
+Em geral ficou uma amostra uniforme, em torno da frequẽncia 35. Vamos agora chamar a biblioteca e gerar o mapa usando o `geobr`.
+
+```{r, eval=F, echo=TRUE}
+# Instalando o 'geobr'
+remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
+```
+
+No Debian/Ubuntu, foi necessário instalar a `libudunits2-dev` no terminal do linux;
+
+```{bash, eval=F, echo=T}
+# No Teminal Linux
+apt install libudunits2-dev
+
+```
+
+
+Após a instalação da biblioteca no Sistema operacional, foi utilizado o comando para instalar o pacote novamente e se tudo ocorreu como esperado, o pacote foi instalado com sucesso!
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+Abaixo vamos seguir com o código da geração do mapa
+
+```{r, message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+# Lendo as bibliotecas
+library(geobr) # Necessária para os dados dos mapas
+library(dplyr) # Necessária para manipulação dos dados
+
+# Convertendo a amostra em tibble
+amostra <- as_tibble(amostra)
+
+# Agrupando os dados dos estados
+dados_estados <- amostra |> 
+                  mutate(abbrev_state = factor(value)) |> 
+                  group_by(abbrev_state) |> 
+                  summarise(n = n())
+
+# Fazendo left_join das informações do geobr com os dados
+dados_mapa <- read_state(year=2019, showProgress = FALSE) |> 
+              left_join(dados_estados)
+
+```
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+Gerando o mapa utilizando a frequência gerada pelo prórpio `ggplot`:
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Pacote ggplot2
+library(ggplot2)
+
+
+# Código do MAPA
+mapa <- dados_mapa |> 
+    ggplot() +
+    geom_sf(aes(fill = n)) +
+    labs(title = "Mapa Brasil", fill = "Frequência")+
+    theme_minimal()+
+    theme(axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid = element_blank())
+
+```
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa
+```
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+
+Criando um intervalo e fazendo o gráfico de acordo com a legenda criada:
+
+```{r, warning=F, message=F, eval=TRUE, echo=TRUE}
+# Descobrindo o maximo e minimo para definir a quantidade de intervalos
+# Calculando o máximo, mínimo e amplitude
+maximo <- max(dados_mapa$n);
+minimo <- min(dados_mapa$n); 
+amplitude <- max(dados_mapa$n) - min(dados_mapa$n)
+print(c(minimo, maximo, amplitude))
+
+# Por questão de facilidade vamos dividir em 3 categorias:
+# 1 - Frequência de menos de 'minimo+1';
+# 2 - Frequência de 'minimo+1' até 'máximo-1';
+# 3 - Frequência de 'máximo-1' ou mais;
+
+#Criando os Intervalos para a Legenda
+classes = c(-Inf, minimo+1, maximo-1, Inf)
+classes_plot <- findInterval(dados_mapa$n,classes)
+
+# Criar legenda
+legenda =  c(paste0('menos de ',minimo+1),
+             paste0(minimo+1,' |-- ',maximo-1),
+             paste0('mais de ',maximo-1))
+
+cores = c("#b2e6ff",
+          "#1659e6",
+          "#00234b")
+```
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+Gerando o mapa atualizado:
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Adicionando a coluna classes_plot no tibble dados_mapa
+dados_mapa <- dados_mapa |> 
+              mutate(classes_plot = factor(classes_plot))
+
+# Pacote ggplot2
+library(ggplot2)
+
+# Código do MAPA
+mapa <- dados_mapa |> 
+  ggplot() +
+  geom_sf(aes(fill = classes_plot), color = "black") +
+  labs(title = "Mapa Brasil",
+       x = "Longitude",
+       y = "Latitude",
+       fill = "Frequência")+
+  scale_fill_manual(labels = legenda,
+                    values = cores)+ 
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(), # Remove grade
+    panel.border = element_rect(color = "black", fill = NA) # Adiciona borda
+  )
+
+```
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa
+```
+
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+A ideia é semelhante a utilizar o pacote `geobr`, entretanto, nesse caso, precisamos ter o arquivo do shape,
+que no exemplo anterior, foi baixado diretamente do pacote `geobr`.
+
+Neste caso, vamos precisar o pacote `sf` para leitura do arquivo *shapefile*.
+
+```{r, eval=F, echo=TRUE}
+# Instalando o 'sf'
+install.packages("sf")
+```
+
+No Debian/Ubuntu, foi necessário instalar as `libs` abaixo no terminal do linux;
+
+```{bash, eval=F, echo=T}
+# No Teminal Linux
+sudo apt-get update
+sudo apt-get install gdal-bin
+sudo apt-get install libgdal-dev
+```
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+
+Vamos utilizar neste caso um arquivo de teste para simular uma análise de dados
+e fazendo o gráfico utilizando o arquivo *shapefile*, vamos adicionar também uma
+Rosa dos Ventos.
+
+```{r, eval=T, echo=TRUE}
+# ---- Load packages
+library(ggplot2)
+library(sf)
+library(dplyr)
+
+# ---- Load sources
+source("dados/src/rosadosventos.R")
+
+```
+
+Vamos nesse caso utilizar um arquivo de *shapefile* do estado da PB e dados também.
+
+```{r, eval=T, echo=T}
+# ----  Load shapefile
+shapename <- read_sf('dados/shape_estado_pb/Municipios.shp')
+
+# ---- Carregar dados
+dados <- read.csv2("dados/exemplo_de_base.csv")
+
+dados |> 
+  head(3)
+```
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+Um ponto importante, é ter certeza que a ordenação dos dados da sua base é a mesma do *shapefile.*
+Assim, vamos criar um dataframe, mantendo a ordenação do *shapefile*.
+
+```{r, eval=T, echo=T}
+# ---- Criando dataframe com a ordem correta do shapefile
+codigoshape <- data.frame(GEOCODIG_M = shapename$GEOCODIG_M)
+
+# ---- Unindo o shapefile com os dados
+dados_mapa_shp <- shapename |> 
+  left_join(dados, by = 'GEOCODIG_M')
+
+
+dados_mapa_shp |> 
+  head(3)
+
+```
+
+A partir de agora, vamos utilizar o dataframe `dados_mapa` para fazer o gráfico.
+
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+Em nosso dataframe, temos as informações de casos de uma doença `X` e também temos informações
+da população por município. Vamos encontrar uma taxa denominada Risco Relativo, que é a razão entre
+a incidência local (por município) pela incidência total (estado da PB).
+
+```{r, eval=T, echo=T}
+# ---- Selecionar coluna de variáveis para gerar mapa
+casos <- dados_mapa_shp$casos
+pop <- dados_mapa_shp$POP2017
+dadosT <- data.frame(Population = pop, CasosPop = casos / pop)
+dadosT <- dadosT |> 
+  mutate(
+    RIE = CasosPop / (sum(casos) / sum(pop)) # Calcula o RIE
+  )
+
+dadosT |> 
+  head(3)
+```
+
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+Vamos agora criar classes para categorizar os valores do Risco Relativo e criar nosso
+mapa com as informações.
+
+```{r, eval=T, echo=T}
+# ---- Criar intervalo de classes
+classes <- c(-Inf, 0.00000000001, 0.49999999999, 0.99999999999, 1.49999999999, 1.99999999999, Inf)
+# ---- Criar legenda
+legenda = c('0','0,0--0,5','0,5|--1,0','1,0|--1,5','1,5|--2,0','2,0 ou +')
+cores <- c("#ffffff", "#f1f1d1", "#e9e57f", "#cda300", "#a46500", "#593216")
+
+# ---- Adicionando a variável Risco Relativo ao shapefile
+dados_mapa_shp <- dados_mapa_shp |> 
+  mutate(
+    RIE = dadosT$RIE, # Adiciona o cálculo ao shapefile
+    classe_var = cut(RIE, breaks = classes, include.lowest = TRUE) # Cria classes
+  )
+```
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+```{r, eval=T, echo=T}
+# ---- Plot com ggplot2
+mapa_shp <- ggplot(data = dados_mapa_shp) +
+  geom_sf(aes(fill = classe_var), color = "black") + # Preenchimento e bordas
+  scale_fill_manual(values = cores, labels = legenda) + # Aplica cores e legenda
+  labs(
+    x = "Longitude",
+    y = "Latitude",
+    fill = "Risco Relativo" # Nome da legenda
+  ) +
+  annotation_custom(
+    grob = compassRoseGrob(x = 0.9, y = 0.9, rot = 0, cex = 2, scale = 0.5),
+    xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf
+  )+
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(), # Remove grade
+    panel.border = element_rect(color = "black", fill = NA) # Adiciona borda
+  )
+``` 
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa_shp
+```
+
+
+
+
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+Vamos utilizar nesse caso dados de COVID--19, que vamos obter através do pacote `coronabr`.
+Instalando os pacotes necessários:
+
+```{r, eval=F, echo=T}
+install.packages("leaflet")
+devtools::install_github("liibre/coronabr")
+```
+
+Lendo os pacotes para pegarmos os dados e gerar o mapa:
+
+```{r, eval=T, echo=T}
+# Bibliotecas Necessrias
+library(dplyr)
+library(leaflet)
+library(sf)
+library(coronabr)
+```
+
+Vamos obter os dados pelo pacote
+
+```{r eval=T, echo=TRUE}
+# Obtendo os dados da PB
+dados_pb <- get_corona_br(uf='PB')
+
+# Convertendo todas as letras dos nomes da cidade em maiúsculos
+dados_pb <- dados_pb  |>
+  mutate(city = toupper(city))
+```
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+Agora, o próximo passo é agrupar por município, ler o *shapefile*
+e ordenar os municípios da mesma ordem do *shapefile*.
+
+
+```{r eval=T, echo=TRUE}
+# Agrupando os dados por cidade
+dados_pb2 <- dados_pb |>  
+  select(c(city,new_confirmed )) |>  
+  group_by(city) |> 
+  summarise(n = sum(new_confirmed))
+
+# ----  Load shapefile
+shapename <- read_sf('dados/shape_estado_pb/Municipios.shp')
+
+# Vamos associar os casos com convertendo 'nomes' para utilizar o left_join
+nomes <- data.frame(city = toupper(shapename$NOME_MUNIC))
+dados_grafico <- left_join(nomes,dados_pb2,by = "city")
+
+dados_grafico |>
+  head(3)
+
+```
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+Vamos criar intervalos para nosso iterpretar os resultados e fazer o plot do mapa
+
+```{r eval=T, echo=TRUE}
+# Selecionando a variável de Interesse
+casos_covid <- dados_grafico$n
+
+# Substituindo os NA's
+casos_covid[is.na(casos_covid)] <- 0
+
+#Criando os Intervalos para a Legenda
+classes = c(-Inf, 209, 414,619,819,1029, 1234, Inf)
+classes_plot <- findInterval(casos_covid,classes)
+
+# Criar legenda
+legenda =  c('0 |-- 210',
+             '210 |-- 415',
+             '415 |-- 620',
+             '620 |-- 820',
+             '820 |-- 1030',
+             '1030 |-- 1235',
+             '1235 ou mais')
+
+
+```
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+Vamos definir as cores e a função do leaflet
+
+```{r eval=T, echo=TRUE}
+# Selecionando as cores de cada classe
+cores = c("#ffffff",
+          "#f1f1d1",
+          "#e9e57f",
+          "#dcca03",
+          "#cda300",
+          "#a46500",
+          "#593216")
+
+# Gerando o grafico
+mapa_leaflet <- leaflet(shapename) |> 
+  addTiles() |> 
+  addPolygons(stroke = T,
+              smoothFactor = 0.3,
+              color = "black",opacity = 1,weight = 1,
+              fillOpacity = 1,
+              fillColor = cores[classes_plot],
+              label = ~paste0(shapename$NOME_MUNIC, ": ", format(casos_covid))) %>%
+  addLegend(position = "topright",colors = cores, labels = legenda, title = "Quantidade de Casos" )
+
+
+```
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa_leaflet
+```
+
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+Se desejar salvar seu gráfico gerado, isso pode ser feito de duas formas, ou salvar em `.png` ou salvar em `.html`, que fica mais interessante, pois possui interação com usuário como o gráfico mostrado no início deste post. A seguir é mostrado as duas formas de salvar:
+
+```{r eval=F, echo=TRUE}
+# Salvar em PNG
+library(mapview)
+mapshot(plot, file="grafico.png")
+
+# Salvar em HTML
+library(htmlwidgets)
+saveWidget(plot, file="grafico.html")
+```
+
+
+
+---
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<hr/>
+
+<h2 style="text-align:center">relembrando os mapas...</h2>
+
+<hr/>
+
+
+
+---
+
+## Criando mapas com `geobr`
+
+<hr/>
+<br/>
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa
+```
+
+
+---
+
+## Criando mapas com *shapefile*
+
+<hr/>
+<br/>
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa_shp
+```
+
+
+---
+
+## Criando mapas com *leaflet*
+
+<hr/>
+<br/>
+
+
+```{r, warning=FALSE, echo=TRUE, eval=TRUE}
+# Visualizando a imagem do mapa
+mapa_leaflet
+```
+
+---
+
+
+
+#### Referências
+
+<hr/>
+
+<div style="font-size:20pt;">
+
+- Burrough, Peter A. "Principles of geographical." Information systems for land resource assessment. Clarendon Press, Oxford (1986).
+
+- Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. Geocomputation with R. Chapman and Hall/CRC, 2019.<https://r.geocompx.org/>
+
+
+- Livro: R for Data Science. Disponível em: <https://r4ds.had.co.nz/>
+- Livro: R for Data Science. Disponível em: <https://ggplot2-book.org/>
+
+
+- Repositório GitHub GGPLOT2: R for Data Science. Disponível em: <https://github.com/tidyverse/ggplot2>
+
+- Repositório GitHub elisangelalizzi: Apresentação visual de dados espaciais em saúde pública para vigilância epidemiológica. Disponível em: <https://github.com/elisangelalizzi/Spatial-Visual/>
+
+</div>
+
+
+
+----
+
+## Referências
+
+<hr/>
+
+Fontes das imagens utilizadas:
+
+- <https://reefresilience.org/management-strategies/remote-sensing-and-mapping/introduction-to-remote-sensing/what-is-remote-sensing/>
+
+- <http://geoden.uff.br/geoprocessamento/>
+
+- <https://clickgeo.com.br/category/sistema-r/>
+
+
+-------------------------------------------------------------------
+
+<br/> <br/>
+
+<hr/>
+
+<h1 style="text-align: center;">
+
+OBRIGADO!
+
+</h1>
+
+<hr/>
+
+::: {style="text-align: center"}
+Slide produzido com [quarto](https://quarto.org/)
+:::
+
+<br/> <br/> <br/> <br/>
+
+**Lattes**: [http://lattes.cnpq.br/4617170601890026](http://lattes.cnpq.br/4617170601890026)
+
+**LinkedIn**: [jodavidferreira](https://www.linkedin.com/in/jodavidferreira/)
+
+**Site Pessoal**: <https://jodavid.github.io/>
+
+**e-mail**: <jodavid.ferreira@ufpe.br>
