@@ -32,23 +32,23 @@ editor:
 <hr/>
 
 
-- Introdução ao GeoProcessamento;
+- Introdução ao GeoProcessamento
 
 <br/>
 
-- Conceitos de Sistemas de Informação Geográfica;
+- Conceitos de Sistemas de Informação Geográfica
 
 <br/>
 
-- Por que escolher o R;
+- Por que escolher o R?
 
 <br/>
 
-- Introdução a linguagem de programação R;
+- Introdução a linguagem de programação R
 
 <br/>
 
-- Criando mapas com R;
+- Criando mapas com R
 
 <br/>
 
@@ -73,8 +73,8 @@ processar, analisar dados espaciais sobre o mundo real (Burrough, 1986).
 
 . . .
 
-Através dos SIGs (Sistemas de Informação Geográfica), que são tecnologias
-do Geoprocessamento, é possível:
+Nosso foco será nos SIGs (Sistemas de Informação Geográfica), que são tecnologias
+do Geoprocessamento, em que é possível:
 
 - representar em **ambientes computacionais** os
 fenômenos geográficos, tais como, a distribuição espacial de dados e informações,
@@ -105,11 +105,11 @@ Os **Sistemas de Informação Geográfica** englobam tecnologias como:
 
 <br/>
 
-> A primeira utilização de um **SIG**, foi em Londres - Inglaterra,
+> A primeira utilização de um **SIG** foi em Londres - Inglaterra,
 no ano de **1854**, quando uma **epidemia de cólera** assolava a cidade e ninguém sabia o
-motivo para tal. Então o doutor **John Snow**, decidiu pegar um mapa do local, e localizar os poços de
+motivo para tal. Então o médico **John Snow** decidiu pegar um mapa do local, e localizar os poços de
 águas (principal fonte de água dos habitantes) e os locais de moradias do doentes, e ele
-visualizou uma forte correlação espacial entre as pessoas que doentes e os poços de água.
+**visualizou** uma forte correlação espacial entre as pessoas que doentes e o poço de água da Broad Street.
 
 
 ![](images/dr_jhon_snow.png){.absolute width=200px style="margin: -50px 0 0 800px;"}
@@ -165,7 +165,7 @@ Alguns conceitos importantes sobre o SIG são:
 <h3>Espaço Geográfico</h3>
 
 <div class="contrib">
-Coleção de localizações na superfície da Terra onde ocorrem os fenômenos geográficos. O
+É a coleção de localizações na superfície da Terra onde ocorrem os fenômenos geográficos. O
 espaço geográfico se define em relação a suas coordenadas, sua altitude e sua posição
 relativa. Vale relembrar que os dados geográficos não estão sozinhos no espaço, ou
 seja, possuem relação com outros dados.
@@ -175,7 +175,7 @@ seja, possuem relação com outros dados.
 
 . . .
 
-O espaço geográfico é composto por entidades distintas (diferentes) e identificáveis os
+O espaço geográfico é composto por entidades distintas (diferentes) e identificáveis, estes são definidos como
 **geo-campos** e os **geo-objetos**;
 
 
@@ -205,7 +205,7 @@ pertencentes a uma região do Espaço Geográfico.
 > Os geo-objetos são dados que possuem localizações e identificação que compõem uma
 determinada região, do espaço geográfico.
 
-- <u>exemplos:</u>: uma pequena cidade, que possui hospitais, igreja, escolas, *IFPB*, etc.
+- <u>exemplos:</u>: hospitais, igrejas, escolas, o *IFPB*, etc.
 
 
 
@@ -221,8 +221,8 @@ determinada região, do espaço geográfico.
 <h3>Dados Espaciais (Informação Espacial)</h3>
 
 <div class="contrib">
-São as informações obtidas de um espaço geográfico que depende da localização do geo-
-objeto (ou de pontos do geo-campo).
+São as informações obtidas de um espaço geográfico que depende da localização do
+geo-objeto (ou de pontos do geo-campo).
 </div>
 
 <br/>
@@ -312,7 +312,7 @@ como produto final.
 
 Esses dados dos Planos de Informações,
 são incorporados em um SIG, advindos de
-diversas fontes, dentre as quais, pode-se destacar:
+diversas fontes, dentre as quais, podem-se destacar:
 
 <br/>
 
@@ -422,7 +422,7 @@ diversas fontes, dentre as quais, pode-se destacar:
 <div class="contrib">
 
 O R é uma linguagem de programação inicialmente desenvolvida para computação estatística.
-E licenciada como *Software Livre.*
+É licenciada como *Software Livre.*
 </div>
 
 . . .
@@ -460,14 +460,13 @@ Vamos supor que temos os seguintes problemas:
 
 . . .
 
-- A polícia deseja investigar se existe algum padrão espacial na distribuição de roubos.
-Roubos que ocorrem em determinadas áreas estão correlacionados com características sócio-
-econômicas dessas áreas?
+1. A polícia deseja investigar se existe algum padrão espacial na distribuição de roubos.
+Os roubos que ocorrem em determinadas áreas estão correlacionados com características sócio-econômicas dessas áreas?
 
 . . .
 
-- Quais os municípios do estado da Paraíba que possuem maiores taxas de casos de dengue dado sua população?
-Essas taxas são esatísticamente significativas?
+2. Quais os municípios do estado da Paraíba que possuem maiores taxas de casos de dengue dado sua população?
+Essas taxas são estatísticamente significativas?
 
 
 
@@ -479,8 +478,7 @@ Essas taxas são esatísticamente significativas?
 
 Em geral, trabalhamos com quatro tipos de dados:
 
-- **Dados Pontuais:** é quando deseja analisar dados de uma determinada área específica,
-definida, e a localização exata é o fator de interesse de estudo. ex.: casos da dengue em uma
+- **Dados Pontuais:** é quando o objetivo é analisar dados de uma determinada área específica, e a localização exata é o fator de interesse de estudo. **Ex.:** pontos onde ocorreram casos de Tuberculose em uma
 cidade.
 
 . . .
@@ -498,7 +496,7 @@ cidade.
 Em geral, trabalhamos com quatro tipos de dados:
 
 - **Dados de Área:** são dados obtidos e analisados de áreas geográficas, nesse caso não utiliza o ponto exato, mas
-uma determinada área geográfica. Ex.: Incidência de alguma epidemia por município, bairro.
+uma determinada área geográfica. **Ex.:** Incidência de alguma epidemia por município, bairro.
 
 
 . . .
@@ -517,7 +515,7 @@ uma determinada área geográfica. Ex.: Incidência de alguma epidemia por munic
 Em geral, trabalhamos com quatro tipos de dados:
 
 - **Dados de Superfície:** são dados obtido de levantamento de recursos naturais, nos quais, a
-sua natureza é a própria superfície do fenômeno estudado. Ex.: a distribuição da
+sua natureza é a própria superfície do fenômeno estudado. **Ex.:** a distribuição da
 temperatura em um estado.
 
 . . .
@@ -537,7 +535,7 @@ temperatura em um estado.
 Em geral, trabalhamos com quatro tipos de dados:
 
 - **Dados de Interação:** são dados obtidos quando há fluxo de informações entre dois ou mais
-pontos com localizações geográficas fixas. ex.: Fluxo migratório entre duas cidades.
+pontos com localizações geográficas fixas. **Ex.:** Fluxo migratório entre duas cidades.
 
 . . .
 
@@ -2681,7 +2679,7 @@ mapa_leaflet <- leaflet(shapename) |>
               color = "black",opacity = 1,weight = 1,
               fillOpacity = 1,
               fillColor = cores[classes_plot],
-              label = ~paste0(shapename$NOME_MUNIC, ": ", format(casos_covid))) %>%
+              label = ~paste0(shapename$NOME_MUNIC, ": ", format(casos_covid))) |>
   addLegend(position = "topright",colors = cores, labels = legenda, title = "Quantidade de Casos" )
 
 
